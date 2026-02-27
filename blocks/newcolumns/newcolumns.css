@@ -1,0 +1,33 @@
+.newcolumns > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.newcolumns img {
+  width: 100%;
+}
+
+.newcolumns > div > div {
+  order: 1;
+}
+
+.newcolumns > div > .newcolumns-img-col {
+  order: 0;
+}
+
+.newcolumns > div > .newcolumns-img-col img {
+  display: block;
+}
+
+@media (width >= 900px) {
+  .newcolumns > div {
+    align-items: center;
+    flex-direction: unset;
+    gap: 24px;
+  }
+
+  .newcolumns > div > div {
+    flex: 1;
+    order: unset;
+  }
+}
