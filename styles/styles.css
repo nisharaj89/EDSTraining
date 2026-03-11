@@ -179,7 +179,7 @@ button.button {
   max-width: 100%;
   margin: 0;
   border: 2px solid transparent;
-  border-radius: 2.4em;
+  border-radius: 0.5em;
   padding: 0.5em 1.2em;
   font: inherit;
   font-weight: 500;
@@ -199,8 +199,8 @@ button.button:disabled {
 
 a.button.primary,
 button.button.primary {
-  border-color: var(--text-color);
-  background-color: var(--text-color);
+ 
+  background-color: #0659d4;
   color: var(--background-color);
 }
 
@@ -208,8 +208,8 @@ a.button.primary:hover,
 a.button.primary:focus-visible,
 button.button.primary:hover,
 button.button.primary:focus-visible {
-  border-color: var(--dark-color);
-  background-color: var(--dark-color);
+  
+  background-color: #0a257a;
   color: var(--light-color);
 }
 
