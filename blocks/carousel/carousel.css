@@ -171,4 +171,6 @@
 .section.testimonial.carousel-container div#carousel-2 {
 margin-left: 25% !important;
 }
- 
+ section.testimonial.carousel-container .carousel-slide-image {
+    margin-left: 25% !important;
+}
