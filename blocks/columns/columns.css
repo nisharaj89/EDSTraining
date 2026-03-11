@@ -31,3 +31,6 @@
     order: unset;
   }
 }
+.section.fivecolimage.columns-container {
+    background-color: #0659D4 !important;
+}
