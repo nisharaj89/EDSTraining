@@ -33,4 +33,8 @@
 }
 .section.fivecolimage.columns-container {
     background-color: #0659D4 !important;
+    .columns img {
+    width: 100px important;
+    padding: 50px important;
+  }
 }
