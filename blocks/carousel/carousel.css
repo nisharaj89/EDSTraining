@@ -157,3 +157,11 @@
     --slide-content-width: auto;
   }
 }
+.section.testimonial.carousel-container .carousel .carousel-slide-indicator button
+ {
+    display: none !important;
+}
+.section.testimonial.carousel-container .carousel .carousel-slide .carousel-slide-image picture > img {
+    height: auto;
+    width: auto;
+}
