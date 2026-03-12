@@ -1,4 +1,4 @@
-.cards > ul {
+.cards   ul {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -7,7 +7,7 @@
   gap: 24px;
 }
 
-.cards > ul > li {
+.cards   ul   li {
   border: 1px solid #dadada;
   background-color: var(--background-color);
 }
@@ -20,7 +20,7 @@
   line-height: 0;
 }
 
-.cards > ul > li img {
+.cards   ul   li img {
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
@@ -43,4 +43,432 @@
     margin-left: -16px;
     background-color: #0659d4 !important; 
     color: white;
+}
+/*cards*/
+/* ========== Section container (mirrors a typical site container) ========== */
+.firstsectioncard .cards.block {
+  max-width: 1200px;              /* adjust if your site uses 1140/1320, etc. */
+  margin-inline: auto;
+}
+
+/* ========== Row layout: fixed tiles, spread across the row ========== */
+.firstsectioncard .cards.block ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.firstsectioncard .cards.block ul   li {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 400px;       /* tile width: try 380–420px to match your reference */
+  gap: 24px;
+  justify-content: space-between; /* distributes tiles edge-to-edge in the container */
+  width: 100%;
+}
+
+/* Responsive tile widths and stacking on small screens */
+@media (max-width: 1200px) {
+  .firstsectioncard .cards.block ul   li {
+    grid-auto-columns: 360px;
+  }
+}
+
+@media (max-width: 992px) {
+  .firstsectioncard .cards.block ul   li {
+    grid-auto-columns: 340px;
+  }
+}
+
+@media (max-width: 768px) {
+  .firstsectioncard .cards.block ul   li {
+    grid-auto-flow: row;
+    grid-auto-columns: unset;
+    grid-template-columns: 1fr;
+    justify-content: stretch;
+  }
+}
+
+/* ========== Card base ========== */
+.firstsectioncard .cards-card-body {
+  position: relative;
+  height: 240px;                  /* card height */
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  background: #eee;
+  isolation: isolate;
+}
+
+.firstsectioncard .cards-card-body   p {
+  margin: 0;
+}
+
+/* Image (first <p ) */
+.firstsectioncard .cards-card-body   p:nth-child(1),
+.firstsectioncard .cards-card-body   p:nth-child(1) picture,
+.firstsectioncard .cards-card-body   p:nth-child(1) img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.firstsectioncard .cards-card-body   p:nth-child(1) img {
+  object-fit: cover;
+  transition:
+    transform 0.35s cubic-bezier(.2, .6, .2, 1),
+    filter   0.35s cubic-bezier(.2, .6, .2, 1);
+}
+
+/* Blue bar (second <p ) */
+.firstsectioncard .cards-card-body   p:nth-child(2) {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  min-height: 62px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  color: #fff;
+  z-index: 3;
+  transition: all 0.35s cubic-bezier(.2, .6, .2, 1);
+}
+
+/* Blue background for the bar */
+.firstsectioncard .cards-card-body   p:nth-child(2)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #1666e1;
+  z-index: -1;
+  transition:
+    opacity  0.35s cubic-bezier(.2, .6, .2, 1),
+    transform 0.35s cubic-bezier(.2, .6, .2, 1);
+}
+
+/* Optional: icon per tile */
+.firstsectioncard .cards.block ul   li   .cards-card-body:nth-of-type(1)   p:nth-child(2)::after {
+  content: "🔧";
+  margin-right: 8px;
+  font-size: 18px;
+}
+.firstsectioncard .cards.block ul   li   .cards-card-body:nth-of-type(2)   p:nth-child(2)::after {
+  content: "🛡️";
+  margin-right: 8px;
+  font-size: 18px;
+}
+.firstsectioncard .cards.block ul   li   .cards-card-body:nth-of-type(3)   p:nth-child(2)::after {
+  content: "👷";
+  margin-right: 8px;
+  font-size: 18px;
+}
+
+/* Description / overlay text (third <p ) */
+.firstsectioncard .cards-card-body   p:nth-child(3) {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  text-align: center;
+  color: #fff;
+
+  opacity: 0;
+  transform: translateY(10px) scale(.98);
+  transition:
+    opacity   0.35s cubic-bezier(.2, .6, .2, 1),
+    transform 0.35s cubic-bezier(.2, .6, .2, 1);
+
+  line-height: 1.55;
+  font-size: 14px;
+}
+
+/* Darkening overlay */
+.firstsectioncard .cards-card-body::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, .55);
+  opacity: 0;
+  transition: opacity 0.35s cubic-bezier(.2, .6, .2, 1);
+  z-index: 2;
+}
+
+/* Hover behavior: ONLY when the blue bar (second <p ) is hovered */
+.firstsectioncard
+.cards-card-body:has(  p:nth-child(2):hover)   p:nth-child(2)::before {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.firstsectioncard
+.cards-card-body:has(  p:nth-child(2):hover)   p:nth-child(2) {
+  inset: 0;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 24px;
+  font-weight: 700;
+  font-size: 20px;
+  color: #fff;
+}
+
+.firstsectioncard
+.cards-card-body:has(  p:nth-child(2):hover)   p:nth-child(3) {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  display: grid;
+  align-content: end;
+  padding-bottom: 64px;
+}
+
+.firstsectioncard
+.cards-card-body:has(  p:nth-child(2):hover)::after {
+  opacity: 1;
+}
+
+.firstsectioncard
+.cards-card-body:has(  p:nth-child(2):hover)   p:nth-child(1) img {
+  filter: brightness(.8) grayscale(.15);
+  transform: scale(1.03);
+}
+
+.firstsectioncard .cards-card-body   p:nth-child(2):hover {
+  text-decoration: underline;
+}
+/*2386380*/
+:root {
+  --blue: #1662F3;
+  --blue-dark: #0e54d6;
+  --overlay-dark: .65;
+  --radius: 12px;
+}
+
+.wrap {
+  max-width: 820px;
+  margin: 40px auto;
+  padding: 0 16px
+}
+
+.cardone .cards ul {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 0;
+  margin: 0
+}
+
+.cardone .cards li {
+  list-style: none;
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #000
+}
+
+.cardone .cards li .cards-card-image {
+  line-height: 0
+}
+
+.cardone .cards li .cards-card-image picture,
+.cardone .cards li .cards-card-image img {
+  display: block;
+  width: 100%;
+  height: auto
+}
+
+.cardone .cards li .cards-card-image img {
+  transition: transform .6s ease;
+  backface-visibility: hidden
+}
+
+.cardone .cards li::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, var(--overlay-dark));
+  opacity: 1;
+  transition: opacity .35s ease;
+  pointer-events: none
+}
+
+.cardone .cards li:hover::after {
+  opacity: 0
+}
+
+.cardone .cards li .cards-card-body {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px 16px;
+  align-content: center;
+  padding: 28px;
+  color: #fff;
+  z-index: 999;
+}
+
+.cardone .cards li .cards-card-body,
+.cardone .cards li .cards-card-body * {
+  filter: none
+}
+
+.cardone .cards li .cards-card-body::before {
+  content: "";
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  background: #fff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%231662F3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' <path d='M22 2L11 13'/ <path d='M22 2l-7 20-4-9-9-4 20-7z'/ </svg ") center/26px 26px no-repeat;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .18);
+  align-self: start;
+  transition: opacity .3s ease, transform .3s ease
+}
+
+.cardone .cards li .cards-card-body h2 {
+  grid-column: 2;
+  margin: 0 0 10px;
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: 0;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .45);
+}
+
+.cardone .cards li .cards-card-body p:not(.button-wrapper) {
+  grid-column: 2;
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: #fff;
+  opacity: 1;
+  max-width: 620px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .35);
+}
+
+.cardone .cards li .cards-card-body .button-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(.96);
+  margin: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .3s ease, transform .3s ease, visibility 0s linear .3s
+}
+
+.cardone .cards li .cards-card-body .button-wrapper .button.primary {
+  display: inline-block;
+  background: var(--blue);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1;
+  padding: 16px 28px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(22, 98, 243, .25);
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease
+}
+
+.cardone .cards li .cards-card-body .button-wrapper .button.primary:hover,
+.cardone .cards li .cards-card-body .button-wrapper .button.primary:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(22, 98, 243, .35);
+  background: var(--blue-dark)
+}
+
+.cardone .cards li:hover .cards-card-body::before,
+.cardone .cards li:hover .cards-card-body h2,
+.cardone .cards li:hover .cards-card-body p:not(.button-wrapper) {
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity .25s ease, transform .25s ease
+}
+
+.cardone .cards li:hover .cards-card-body .button-wrapper {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
+  transition: opacity .35s ease, transform .35s ease, visibility 0s
+}
+
+.cardone .cards li:hover .cards-card-image img {
+  transform: scale(1.08)
+}
+
+@media (max-width:600px) {
+  .cardone .cards li .cards-card-body {
+    padding: 20px
+  }
+
+  .cardone .cards li .cards-card-body h2 {
+    font-size: 24px
+  }
+
+  .cardone .cards li .cards-card-body p:not(.button-wrapper) {
+    font-size: 15px;
+    max-width: 100%
+  }
+}
+ /* ─────────────────────────────────────────────────────────────
+   ICON TILE — base setup (keeps your size/shape/shadow)
+   We switch from hard-coded background to a reusable CSS var: --icon
+   ───────────────────────────────────────────────────────────── */
+.cardone .cards li .cards-card-body::before{
+  content:"";
+  width:50px;
+  height:50px;
+  border-radius:10px;
+  background:#fff;                 /* white tile like your demo */
+  box-shadow:0 2px 8px rgba(0,0,0,.18);
+  align-self:start;
+  transition:opacity .3s ease, transform .3s ease, background-color .2s ease;
+  /* icon image comes from the custom property below */
+  background-image: var(--icon, none);
+  background-repeat:no-repeat;
+  background-position:center;
+  background-size:26px 26px;
+}
+
+/* Optional: invert on hover (blue tile + white glyph) */
+.cardone .cards li:hover .cards-card-body::before{
+  background:#1662F3;
+  /* swap to white glyph variants on hover if you want (see notes below) */
+}
+
+/* ─────────────────────────────────────────────────────────────
+   PER‑CARD ICONS via CSS variables (URL‑encoded inline SVG)
+   ───────────────────────────────────────────────────────────── */
+
+/* Card 1 — “check/verified” style */
+.cardone .cards li:nth-child(1){
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%231662F3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M22 2L11 13'/%3E%3Cpath d='M22 2l-7 20-4-9-9-4 20-7z'/%3E%3C/svg%3E");
+}
+
+/* Card 2 — “shield” */
+.cardone .cards li:nth-child(2){
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%231662F3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/%3E%3C/svg%3E");
+}
+
+/* Card 3 — “bolt” */
+.cardone .cards li:nth-child(3){
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%231662F3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='13 2 3 14 12 14 11 22 21 10 12 10 13 2'/%3E%3C/svg%3E");
+}
+
+/* If you have 6 cards total (two rows), continue assigning: */
+/* Card 4 — “check circle” */
+.cardone .cards li:nth-child(4){
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%231662F3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M22 11.08V12a10 10 0 1 1-5.93-9.14'/%3E%3Cpolyline points='22 4 12 14.01 9 11.01'/%3E%3C/svg%3E");
+}
+/* Card 5 — “layers” */
+.cardone .cards li:nth-child(5){
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%231662F3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='12 2 2 7 12 12 22 7 12 2'/%3E%3Cpolyline points='2 17 12 22 22 17'/%3E%3Cpolyline points='2 12 12 17 22 12'/%3E%3C/svg%3E");
+}
+/* Card 6 — “settings/cog” */
+.cardone .cards li:nth-child(6){
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%231662F3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3Cpath d='M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06A2 2 0 1 1 7.04 3.3l.06.06c.46.46 1.12.6")
 }

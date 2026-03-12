@@ -35,3 +35,9 @@
     padding: 40px 32px;
   }
 }
+.section.hero-container {
+    display: none;
+}
+.default-content-wrapper {
+    width: 100% !important;
+}

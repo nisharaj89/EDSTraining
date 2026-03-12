@@ -169,3 +169,33 @@ export default async function decorate(block) {
   navWrapper.append(nav);
   block.append(navWrapper);
 }
+  // Toggle full menu
+  (function () {
+    const nav = document.getElementById('nav');
+    const btn = nav?.querySelector('.nav-hamburger button');
+    const tools = nav?.querySelector('.section.nav-tools');
+
+    if (btn && tools) {
+      btn.addEventListener('click', () => {
+        const expanded = nav.getAttribute('aria-expanded') === 'true';
+        nav.setAttribute('aria-expanded', String(!expanded));
+        tools.classList.toggle('open');
+        btn.setAttribute('aria-label', expanded ? 'Open navigation' : 'Close navigation');
+      });
+    }
+
+    // On mobile, tapping a top-level item toggles its submenu
+    const topItems = nav?.querySelectorAll('.nav-tools > .default-content-wrapper > ul > li');
+    topItems?.forEach(li => {
+      const label = li.querySelector('p, a'); // you use <p> as label; support <a> too
+      const submenu = li.querySelector(':scope > ul');
+      if (label && submenu) {
+        label.addEventListener('click', (e) => {
+          if (window.matchMedia('(max-width: 899px)').matches) {
+            e.preventDefault();
+            li.classList.toggle('open');
+          }
+        });
+      }
+    });
+  })();
