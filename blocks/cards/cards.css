@@ -34,3 +34,13 @@
     font-size: 70px;
     color: #0659d4;
 }
+.section.firstsectioncard.cards-container h2
+ {
+    font-size: 22px;
+    padding: 13px 35px;
+    margin-top: -16px;
+    width: 210px;
+    margin-left: -16px;
+    background-color: #0659d4 !important; 
+    color: white;
+}
