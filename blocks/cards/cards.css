@@ -472,3 +472,107 @@
 .cardone .cards li:nth-child(6){
   --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%231662F3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3Cpath d='M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06A2 2 0 1 1 7.04 3.3l.06.06c.46.46 1.12.6")
 }
+/*2386380 teammembers*/
+/* ============================================
+   Team cards: overlay + social icons on hover
+   Scope: .teammemberes
+   No HTML/JS changes required
+   ============================================ */
+
+/* Image wrapper can host overlay + icon rail */
+.teammemberes .cards.block ul > li .cards-card-image {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px; /* adjust to match your theme */
+}
+
+/* Smooth zoom on image */
+.teammemberes .cards.block ul > li .cards-card-image picture,
+.teammemberes .cards.block ul > li .cards-card-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 400ms ease;
+  will-change: transform;
+}
+
+.teammemberes .cards.block ul > li:hover .cards-card-image picture,
+.teammemberes .cards.block ul > li:hover .cards-card-image img {
+  transform: scale(1.04);
+}
+
+/* ---- Dark overlay on hover (below icon rail) ---- */
+.teammemberes .cards.block ul > li .cards-card-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.05) 0%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+  opacity: 0;
+  transition: opacity 300ms ease;
+  pointer-events: none;
+  z-index: 1; /* keep overlay below icons */
+}
+
+.teammemberes .cards.block ul > li:hover .cards-card-image::after {
+  opacity: 1;
+}
+
+/* ---- Social icon rail (CSS-only, visual) ----
+   Uses Base64 SVGs to avoid editor warnings.
+   Renders ABOVE the overlay and slides in from the right.
+*/
+.teammemberes .cards.block ul > li .cards-card-image::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 14px;                           /* final rest position */
+  transform: translateY(-50%) translateX(16px); /* start slightly off to the right */
+  width: 40px;                           /* rail width */
+  height: 162px;                         /* rail height for 3 icons + gaps */
+  border-radius: 8px;
+  opacity: 0;
+  transition: opacity 260ms ease, transform 260ms ease;
+  background-color: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(2px);
+  z-index: 2;                            /* icons above overlay */
+
+  /* Three icons stacked vertically using multiple backgrounds */
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-position:
+    center 26px,   /* Facebook */
+    center 81px,   /* X/Twitter */
+    center 136px;  /* LinkedIn */
+  background-size:
+    22px 22px,
+    22px 22px,
+    22px 22px;
+
+  /* Facebook (white) */
+  background-image:
+    url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiPjxwYXRoIGQ9Ik0yMiAxMi4wN0MyMiA2LjQ4IDE3LjUyIDIgMTEuOTMgMlMxLjg2IDYuNDggMS44NiAxMi4wN2MwIDQuOTcgMy42MiA5LjA5IDguMzYgOS45M3YtNy4wMkg3Ljl2LTIuOTFoMi4zMlY5LjQxYzAtMi4yOSAxLjM2LTMuNTYgMy40NS0zLjU2Ljk5IDAgMi4wMi4xOCAyLjAyLjE4djIuMjJoLTEuMTRjLTEuMTIgMC0xLjQ3LjctMS40NyAxLjQydjEuNzFoMi41bC0uNCAyLjkxaC0yLjFWMjJjNC43NC0uODQgOC4zNi00Ljk2IDguMzYtOS45M3oiLz48L3N2Zz4="),
+    /* X/Twitter (white X) */
+    url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiPjxwYXRoIGQ9Ik0zIDNsNy41IDlMMyAyMWgzLjVsNS41LTYuNSw1LjUgNi41SDIxbC03LjUtOUwyMSAzSDE3LjVMMTIgOS41IDYuNSAzSDMyeiIvPjwvc3ZnPg=="),
+    /* LinkedIn (white) */
+    url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiPjxwYXRoIGQ9Ik00Ljk4IDMuNUM0Ljk4IDQuODggMy44NyA2IDIuNSA2UzAgNC44OCAwIDMuNSAxLjEyIDEgMi41IDFzMi40OCAxLjEyIDIuNDggMi41ek0wIDguOThoNXYxNS4wMkgwVjguOTh6TTguNDggOC45OEgxM3YyLjA1aC4wN2MuNjMtMS4yIDIuMTYtMi40NiA0LjQ1LTIuNDYgNC43NiAwIDUuNjMgMy4xMyA1LjYzIDcuMlYyNGgtNXYtNi42M2MwLTEuNTgtLjAzLTMuNjItMi4yLTMuNjItMi4yIDAtMi41MyAxLjcyLTIuNTMgMy41MVYyNGgtNXYtMTUuMDJ6Ii8+PC9zdmc+");
+}
+
+/* Slide-in + reveal on hover */
+.teammemberes .cards.block ul > li:hover .cards-card-image::before {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+/* Optional: soft brand tint when hovering the image area */
+.teammemberes .cards.block ul > li .cards-card-image:hover::before {
+  background-color: #0659D4; /* adjust to your brand blue */
+}
+
+/* Keep normal body spacing (optional) */
+.teammemberes .cards.block ul > li .cards-card-body {
+  padding-top: 14px;
+}
