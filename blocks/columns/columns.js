@@ -90,7 +90,6 @@ export default function decorate(block) {
 
 //maque
 (function () {
-  // Guard: run after DOM is ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initMarquee);
   } else {
@@ -101,82 +100,66 @@ export default function decorate(block) {
     const section = document.querySelector('.section.marquesection');
     if (!section) return;
 
-    // Find the Columns block inside the marquesection
     const columnsBlock = section.querySelector('.columns.block');
     if (!columnsBlock) return;
 
-    // Find the first <p> that contains the country names
     const sourceP = columnsBlock.querySelector('p');
     if (!sourceP) return;
 
-    // Extract and normalize the text content.
-    // Your sample has: **United State Kingdom<br>**Bangladesh<br>**United State<br>**New York US
-    // We remove asterisks and split on line breaks / commas / pipes.
+    // Normalize: remove '**', convert <br> to '|'
     const raw = sourceP.innerHTML
-      .replace(/\*\*/g, '')           // remove the leading **
-      .replace(/<br\s*\/?>/gi, '|');  // unify line breaks into |
+      .replace(/\*\*/g, '')
+      .replace(/<br\s*\/?>/gi, '|');
 
-    // Split into items, trim, and filter empties
     const items = raw.split('|')
       .map(s => s.replace(/&nbsp;/g, ' ').trim())
       .filter(Boolean);
 
     if (!items.length) return;
 
-    // Build a viewport + track; keep original content hidden (but not removed)
-    // We won't delete or edit HTML provided by you; we just add siblings
-    // Hide the original paragraph visually but keep for SEO/accessibility if needed
+    // Hide original content (preserve for SEO/AT)
     sourceP.setAttribute('aria-hidden', 'true');
     sourceP.style.position = 'absolute';
     sourceP.style.left = '-9999px';
 
-    // Create viewport and track
+    // Build marquee
     const viewport = document.createElement('div');
     viewport.className = 'marquee-viewport';
 
     const track = document.createElement('div');
     track.className = 'marquee-track';
-    track.setAttribute('data-speed', 'normal'); // slow|normal|fast option
+    track.setAttribute('data-speed', 'normal');
 
-    // Helper to create one loop's worth of items
     function appendOneLoop(intoEl) {
       items.forEach((label) => {
         const span = document.createElement('span');
-        span.className = 'marquee-item outlined'; // remove 'outlined' if you want filled text
+        span.className = 'marquee-item outlined country'; // remove 'outlined' if you want filled text
         span.textContent = label;
         intoEl.appendChild(span);
 
-        // Add a spacer bullet between items (optional)
         const spacer = document.createElement('span');
-        spacer.className = 'marquee-item';
-        spacer.style.opacity = '0.35';
-        spacer.style.fontWeight = '400';
-        spacer.textContent = ' • ';
+        spacer.className = 'marquee-item spacer';
+        spacer.textContent = ' * '; // asterisk separator
         intoEl.appendChild(spacer);
       });
     }
 
-    // We need two copies for seamless loop
     appendOneLoop(track);
     appendOneLoop(track);
 
-    // Insert viewport + track inside the Columns block, above the original <p>
     viewport.appendChild(track);
 
-    // Place viewport at the end of the columns block’s inner wrapper (<div><div>...</div></div>)
-    // The structure in your DOM is columns.block > div > div > p
     const innerWrapper = columnsBlock.querySelector(':scope > div > div') || columnsBlock;
     innerWrapper.appendChild(viewport);
 
-    // Adjust animation duration based on content width for reasonable speed
+    // Auto-duration based on width (~100px/sec)
     requestAnimationFrame(() => {
-      const totalWidth = track.scrollWidth / 2; // width of one loop
-      // Target ~100px/sec base speed
+      const totalWidth = track.scrollWidth / 2; // one loop width
       const seconds = Math.max(12, Math.min(60, totalWidth / 100));
       track.style.animationDuration = seconds + 's';
     });
 
-    // Pause on hover (optional)
+    // Pause on hover
     viewport.addEventListener('mouseenter', () => track.style.animationPlayState = 'paused');
     viewport.addEventListener('mouseleave', () => track.style.animationPlayState = 'running');
   }
