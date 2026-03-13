@@ -2379,3 +2379,12 @@
     transform: translateX(0);
   }
 }
+.marquesection .columns.block .marquee-item.spacer {
+  -webkit-text-stroke: 2px #e5e5e5; /* match your outline width */
+  color: transparent;                /* outlined look */
+}
+.marquesection .columns.block .marquee-item.spacer:hover,
+.marquesection .columns.block .marquee-item.country:hover + .marquee-item.spacer {
+  -webkit-text-stroke-color: #1e73be;
+  color: transparent;
+}
