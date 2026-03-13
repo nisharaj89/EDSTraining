@@ -2385,6 +2385,12 @@
 }
 .marquesection .columns.block .marquee-item.spacer:hover,
 .marquesection .columns.block .marquee-item.country:hover + .marquee-item.spacer {
-  -webkit-text-stroke-color: #1e73be;
+  -webkit-text-stroke-color: #1666e1;
   color: transparent;
+}
+.marquesection .default-content-wrapper {
+    margin-right: -15% !important;
+}
+.marquesection .default-content-wrapper  h4#export-services {
+    color: #1666e1 !important;
 }
