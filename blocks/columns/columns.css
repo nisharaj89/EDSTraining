@@ -2305,3 +2305,75 @@
 .youtubesection .columns .columns-img-col:first-child {
   overflow: hidden; /* tidy edges on small screens */
 }
+/*2386380 marque*/
+/* === Marquee: scoped to .marquesection === */
+.marquesection .columns.block {
+  position: relative;
+  overflow: hidden;           /* hide overflow for marquee */
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+/* The JS will inject .marquee-track; but if not, we fallback to styling the existing divs */
+.marquesection .columns.block .marquee-viewport {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.marquesection .columns.block .marquee-track {
+  display: flex;
+  align-items: center;
+  gap: 3rem;                  /* space between repeated items */
+  white-space: nowrap;
+  will-change: transform;
+  animation: ms-scroll-left linear infinite;
+}
+
+/* Tweak speed here by duration; longer = slower */
+.marquesection .columns.block .marquee-track[data-speed="slow"] {
+  animation-duration: 40s;
+}
+.marquesection .columns.block .marquee-track[data-speed="normal"] {
+  animation-duration: 25s;
+}
+.marquesection .columns.block .marquee-track[data-speed="fast"] {
+  animation-duration: 15s;
+}
+
+@keyframes ms-scroll-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); } /* track is doubled, so -50% loops seamlessly */
+}
+
+/* Typography adjustments for the items */
+.marquesection .columns.block .marquee-item {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 700;
+  font-size: clamp(20px, 4.2vw, 64px); /* responsive */
+  line-height: 1.1;
+  color: #e5e5e5;             /* light grey like the demo’s large outline look */
+  text-transform: none;
+  margin: 0;
+}
+
+/* If you want outlined look (optional) */
+.marquesection .columns.block .marquee-item.outlined {
+  color: transparent;
+  -webkit-text-stroke: 2px #e5e5e5;
+  text-stroke: 2px #e5e5e5;   /* non-standard, supported variably */
+}
+
+/* Remove default margins/line breaks from the original p */
+.marquesection .columns.block p {
+  margin: 0;
+}
+
+/* Respect user preference: reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  .marquesection .columns.block .marquee-track {
+    animation: none;
+    transform: translateX(0);
+  }
+}
